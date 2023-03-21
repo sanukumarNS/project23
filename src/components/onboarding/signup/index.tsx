@@ -1,15 +1,17 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useNavigation} from '@react-navigation/native';
+import {CommonActions, useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {Pressable, Text, View} from 'react-native';
 import routes from '../../../assets/routes';
 
 const SignUp = ({route}) => {
-  console.log('get value from route',route);
-  const {navigate} = useNavigation();
+  console.log('get value from route', route);
+  const {dispatch} = useNavigation();
   const goToDashboard = async () => {
     await AsyncStorage.setItem('access_token', '123');
-    return navigate(routes.dashboard.path);
+    return dispatch(
+      CommonActions.reset({index: 0, routes: [{name: routes.dashboard.path}]}),
+    );
   };
 
   return (

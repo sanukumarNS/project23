@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useNavigation} from '@react-navigation/native';
+import {CommonActions, useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {Pressable, Text, View} from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -16,10 +16,18 @@ const Home = () => {
       console.log(image);
     });
   };
-  const {navigate} = useNavigation();
+  const {dispatch} = useNavigation();
   const logout = async () => {
     await AsyncStorage.setItem('access_token', '');
-    navigate(routes.onboarding.login.path);
+    dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [
+          {name: routes.onboarding.login.path},
+          {name: routes.onboarding.signup.path},
+        ],
+      }),
+    );
   };
   return (
     <View>

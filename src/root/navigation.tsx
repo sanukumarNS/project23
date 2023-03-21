@@ -16,7 +16,7 @@ const BottomTabs = createBottomTabNavigator();
 const DashboardNavigation = () => {
   return (
     <BottomTabs.Navigator
-      initialRouteName={routes.dashboard.chat.path}
+      initialRouteName={routes.dashboard.home.path}
       screenOptions={{header: () => null}}>
       <BottomTabs.Screen component={Home} name={routes.dashboard.home.path} />
       <BottomTabs.Screen component={Chat} name={routes.dashboard.chat.path} />

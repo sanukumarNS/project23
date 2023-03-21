@@ -5,6 +5,12 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 100,
   },
+  saveEnabled: {
+    backgroundColor: 'green',
+  },
+  saveDisabled: {
+    backgroundColor: 'grey',
+  },
 });
 
 export default styles;

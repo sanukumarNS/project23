@@ -1,6 +1,9 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {Pressable, Text, View} from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
+import routes from '../../../assets/routes';
 import styles from '../settings/styles';
 
 const Home = () => {
@@ -13,11 +16,19 @@ const Home = () => {
       console.log(image);
     });
   };
+  const {navigate} = useNavigation();
+  const logout = async () => {
+    await AsyncStorage.setItem('access_token', '');
+    navigate(routes.onboarding.login.path);
+  };
   return (
     <View>
       <Text>Home</Text>
       <Pressable onPress={selectImage} style={styles.selectImageButton}>
         <Text>Select an Image</Text>
+      </Pressable>
+      <Pressable onPress={logout} style={styles.logoutButton}>
+        <Text>Logout</Text>
       </Pressable>
     </View>
   );

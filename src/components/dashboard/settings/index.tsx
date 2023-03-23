@@ -7,7 +7,6 @@ const Settings = () => {
   const [selectedDate, setSelectedDate] = useState();
   const onChangeDate = (event, date) => {
     setSelectedDate(JSON.stringify(date));
-    console.log(date);
   };
   return (
     <View style={styles.parent}>

@@ -7,6 +7,7 @@ import routes from '../assets/routes';
 import Chat from '../components/dashboard/chat';
 import Home from '../components/dashboard/home';
 import Settings from '../components/dashboard/settings';
+import Todos from '../components/dashboard/todos';
 import Login from '../components/onboarding/login';
 import SignUp from '../components/onboarding/signup';
 
@@ -24,6 +25,7 @@ const DashboardNavigation = () => {
         component={Settings}
         name={routes.dashboard.settings.path}
       />
+      <BottomTabs.Screen component={Todos} name={routes.dashboard.todos.path} />
     </BottomTabs.Navigator>
   );
 };

@@ -19,6 +19,9 @@ const routes = {
     settings: {
       path: 'Settings',
     },
+    todos: {
+      path: 'Todos',
+    },
   },
 };
 

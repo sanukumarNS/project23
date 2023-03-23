@@ -6,6 +6,7 @@ const Chat = () => {
   const [name, setName] = useState('');
   const saveNameStyle =
     name.length > 0 ? styles.saveEnabled : styles.saveDisabled;
+  console.log(new Date().toString());
   return (
     <View>
       <Text>Chat</Text>

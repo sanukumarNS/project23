@@ -1,22 +1,49 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {CommonActions, useNavigation} from '@react-navigation/native';
-import React from 'react';
-import {Pressable, Text, View} from 'react-native';
-import ImagePicker from 'react-native-image-crop-picker';
+import React, {useEffect, useState} from 'react';
+import {
+  ActivityIndicator,
+  FlatList,
+  Pressable,
+  Text,
+  ToastAndroid,
+  View,
+} from 'react-native';
 import routes from '../../../assets/routes';
-import styles from '../settings/styles';
+import {BASE_URL, POSTS} from '../../../services/endpoints';
+import {Post} from '../../../services/models/post';
+import styles from './styles';
+import useSelectImage from './useSelectImage';
 
 const Home = () => {
-  const selectImage = () => {
-    ImagePicker.openPicker({
-      width: 300,
-      height: 400,
-      cropping: true,
-    }).then(image => {
-      console.log(image);
-    });
-  };
   const {dispatch} = useNavigation();
+  const {selectImage, image} = useSelectImage();
+  const [isActivityIndicatorVisible, setIsAcitivityIndicatorVisible] =
+    useState<boolean>(false);
+  const [posts, setPosts] = useState<Post[]>([]);
+  const getPosts = async () => {
+    setIsAcitivityIndicatorVisible(true);
+    try {
+      const postsResponse = await fetch(BASE_URL + POSTS);
+      const postsResponseJson = await postsResponse.json();
+      setPosts(postsResponseJson);
+      console.log(postsResponseJson.user.id);
+    } catch (e) {
+      ToastAndroid.show('An exception occured ' + e, ToastAndroid.SHORT);
+    }
+    setIsAcitivityIndicatorVisible(false);
+  };
+  const renderPost = ({item}: {item: Post}) => {
+    return (
+      <View style={styles.postParent}>
+        <Text style={styles.postTitle}>{item.title}</Text>
+        <Text style={styles.postBody}>{item.body}</Text>
+      </View>
+    );
+  };
+  useEffect(() => {
+    getPosts();
+  }, []);
   const logout = async () => {
     await AsyncStorage.setItem('access_token', '');
     dispatch(
@@ -29,6 +56,9 @@ const Home = () => {
       }),
     );
   };
+  const refresh = () => {
+    getPosts();
+  };
   return (
     <View>
       <Text>Home</Text>
@@ -38,6 +68,17 @@ const Home = () => {
       <Pressable onPress={logout} style={styles.logoutButton}>
         <Text>Logout</Text>
       </Pressable>
+      <Pressable onPress={refresh} style={styles.refreshButton}>
+        <Text>Refresh</Text>
+      </Pressable>
+      {/* Display posts */}
+      {/* {condition ? (
+        <ActivityIndicator animating={isActivityIndicatorVisible} />
+      ) : null} */}
+      <ActivityIndicator animating={isActivityIndicatorVisible} />
+      <View>
+        <FlatList data={posts} renderItem={renderPost} />
+      </View>
     </View>
   );
 };

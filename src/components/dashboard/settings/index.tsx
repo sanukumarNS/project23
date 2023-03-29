@@ -1,17 +1,22 @@
-import RNDateTimePicker from '@react-native-community/datetimepicker';
 import React, {useState} from 'react';
-import {Text, View} from 'react-native';
+import {Pressable, Text, View} from 'react-native';
+import {useQueryClient} from 'react-query';
 import styles from './styles';
 
 const Settings = () => {
   const [selectedDate, setSelectedDate] = useState();
-  const onChangeDate = (event, date) => {
-    setSelectedDate(JSON.stringify(date));
+  const client = useQueryClient();
+  const refreshPosts = () => {
+    client.refetchQueries({queryKey: 'posts'});
+    // client.clear()
+    // client.cancelQueries();
   };
   return (
     <View style={styles.parent}>
       <Text>{selectedDate}</Text>
-      <RNDateTimePicker value={new Date()} onChange={onChangeDate} />
+      <Pressable onPress={refreshPosts}>
+        <Text>Refresh My data</Text>
+      </Pressable>
     </View>
   );
 };

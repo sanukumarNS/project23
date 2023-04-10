@@ -10,6 +10,7 @@ import Settings from '../components/dashboard/settings';
 import Todos from '../components/dashboard/todos';
 import Login from '../components/onboarding/login';
 import SignUp from '../components/onboarding/signup';
+import HomeNew from '../screens/Home';
 
 const Stack = createStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -17,15 +18,22 @@ const BottomTabs = createBottomTabNavigator();
 const DashboardNavigation = () => {
   return (
     <BottomTabs.Navigator
-      initialRouteName={routes.dashboard.home.path}
+      initialRouteName={HomeNew}
       screenOptions={{header: () => null}}>
-      <BottomTabs.Screen component={Home} name={routes.dashboard.home.path} />
+      <BottomTabs.Screen
+        component={HomeNew}
+        name={routes.dashboard.home.path}
+      />
       <BottomTabs.Screen component={Chat} name={routes.dashboard.chat.path} />
       <BottomTabs.Screen
         component={Settings}
         name={routes.dashboard.settings.path}
       />
       <BottomTabs.Screen component={Todos} name={routes.dashboard.todos.path} />
+      <BottomTabs.Screen
+        component={HomeNew}
+        name={routes.dashboard.homenew.path}
+      />
     </BottomTabs.Navigator>
   );
 };
@@ -55,7 +63,7 @@ const AppNavigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={initialRoute}
+        initialRouteName={HomeNew}
         screenOptions={{header: () => null}}>
         <Stack.Screen component={Login} name={routes.onboarding.login.path} />
         <Stack.Screen component={SignUp} name={routes.onboarding.signup.path} />

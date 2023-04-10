@@ -16,6 +16,9 @@ const routes = {
     home: {
       path: 'Home',
     },
+    homenew: {
+      path: 'HomeNew',
+    },
     settings: {
       path: 'Settings',
     },
